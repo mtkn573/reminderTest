@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Notification test</title>
+</head>
+
+<body>
+
+<button id="button">Show notification</button>
+
+<script>
+document.getElementById("button").onclick=async()=>{
+    if(!("Notification" in window)){
+        alert("Notifications are not supported")
+        return
+    }
+
+    let permission=Notification.permission
+
+    if(permission==="default"){
+        permission=await Notification.requestPermission()
+    }
+
+    if(permission==="granted"){
+        new Notification("Planner",{
+            body:"Your reminder is due!"
+        })
+    }
+    else{
+        alert("Notification permission: "+permission)
+    }
+}
+</script>
+
+</body>
+</html>
