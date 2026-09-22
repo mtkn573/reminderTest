@@ -1,38 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Notification test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 </head>
-
 <body>
+    <!--
+Source - https://stackoverflow.com/q/66326362
+Posted by Bagzli, modified by community. See post 'Timeline' for change history
+Retrieved 2026-09-22, License - CC BY-SA 4.0
+-->
 
-<button id="button">Show notification</button>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<button id="request">Request</button>
+<button id="send">Send Notification</button>
+<p>Status: <span></span></p>
 
 <script>
-document.getElementById("button").onclick=async()=>{
-    if(!("Notification" in window)){
-        alert("Notifications are not supported")
-        return
-    }
+    // Source - https://stackoverflow.com/q/66326362
+// Posted by Bagzli, modified by community. See post 'Timeline' for change history
+// Retrieved 2026-09-22, License - CC BY-SA 4.0
 
-    let permission=Notification.permission
+document.querySelector('#request').addEventListener('click', () => {
+  if (!('Notification' in window)) {
+  console.log("This browser does not support notifications.");
+  } else {
+  Notification.requestPermission((p)=>document.querySelector('p > span').textContent = p);
+  }
+});
 
-    if(permission==="default"){
-        permission=await Notification.requestPermission()
-    }
 
-    if(permission==="granted"){
-        new Notification("Planner",{
-            body:"Your reminder is due!"
-        })
-    }
-    else{
-        alert("Notification permission: "+permission)
-    }
-}
+document.querySelector('#send').addEventListener('click', () => {
+  if (!('Notification' in window)) {
+  console.log("This browser does not support notifications.");
+  } else {
+  var notification = new Notification('To do list', { body: "This is some test"});
+  }
+});
 </script>
-
 </body>
 </html>
